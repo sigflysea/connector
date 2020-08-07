@@ -8,7 +8,7 @@
         "start": "node server",
         "server": "nodemon server"
     },
-    "author": "",
+    "author": "Jundong Lin",
     "license": "ISC",
     "dependencies": {
         "bcryptjs": "^2.4.3",
