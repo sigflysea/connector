@@ -1,3 +1,4 @@
 {
-    "mongoURI": "mongodb+srv://mern123:mern12377@connector.k0lqz.mongodb.net/connecor?retryWrites=true&w=majority"
+    "mongoURI": "mongodb+srv://mern123:mern12377@connector.k0lqz.mongodb.net/connecor?retryWrites=true&w=majority",
+    "jwtSecret": "secret113"
 }
