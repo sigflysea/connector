@@ -28,10 +28,10 @@ router.post('/:user_id', async (req, res) => {
     try {
         const post = await Post.findOne({
             user: req.params.user_id,
-        }).populate('name', ['name', 'avatar']);
-        // if (!post) {
-        //     return res.status(400).json({ msg: 'no user found' });
-        // }
+        }).populate('user', ['name', 'avatar']); //wrong using 'name' as first cause error, but in profile it didn't cause error????
+        if (!post) {
+            return res.status(400).json({ msg: 'no user found' });
+        }
         return res.json(post);
     } catch (err) {
         if (err.kind == 'ObjectId') {
@@ -70,15 +70,39 @@ router.post(
     }
 );
 //@route   Get api/posts/:post_id
-//@desc    Get post by post ID
+//@desc    post  by post ID
 //@access  Private
-router.post('/:post_id', async (req, res) => {
+router.post('/:post_id', auth, async (req, res) => {
     try {
         const post = await Post.findById(req.params.post_id);
         if (!post) {
             return res.status(404).json({ msg: 'no post found' });
         }
         res.json(post);
+    } catch (err) {
+        if (err.kind == 'ObjectId') {
+            return res.status(400).json({ msg: 'no post found' });
+        }
+        console.error(err.message);
+        res.status(500).send('Server error');
+    }
+});
+
+//@route   Delete api/posts/:post_id
+//@desc    Delete post by post ID
+//@access  Private
+router.delete('/:post_id', auth, async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.post_id);
+        if (!post) {
+            return res.status(404).json({ msg: 'no post found' });
+        }
+        if (post.user.toString() !== req.userP.id) {
+            return res.status(401).json({ msg: 'not authorized' });
+        }
+
+        post.remove();
+        return res.json(post);
     } catch (err) {
         if (err.kind == 'ObjectId') {
             return res.status(400).json({ msg: 'no post found' });
