@@ -1,4 +1,4 @@
-import React, { fragment } from 'react';
+import React, { Fragment } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Landing from './components/layout/Landing';
@@ -19,10 +19,10 @@ function App() {
                     <Route exact path='/' component={Landing} />
                     <section className='container'>
                         <Alert />
-                        <switch>
+                        <Switch>
                             <Route path='/login' component={Login} />
                             <Route path='/register' component={Register} />
-                        </switch>
+                        </Switch>
                     </section>
                 </div>
             </Router>
