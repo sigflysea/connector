@@ -1,4 +1,11 @@
-import { REGISTER_SUCCESS, REGISTER_FAIL } from '../actions/types';
+import {
+    REGISTER_SUCCESS,
+    REGISTER_FAIL,
+    USER_LOADED,
+    AUTH_ERROR,
+    LOGIN_SUCCESS,
+    LOGIN_ERROR,
+} from '../actions/types';
 
 const initialState = {
     token: localStorage.getItem('token'),
@@ -11,7 +18,11 @@ export default function (state = initialState, action) {
     const { type, payload } = action;
 
     switch (type) {
+        case USER_LOADED:
+            return { ...state, isAuthenticated: true, user: payload };
+        case LOGIN_SUCCESS:
         case REGISTER_SUCCESS:
+            //localStorage setItem can be commented out. it break the ruls of redux?
             localStorage.setItem('token', payload.token);
             return {
                 ...state,
@@ -21,6 +32,8 @@ export default function (state = initialState, action) {
             };
 
         case REGISTER_FAIL:
+        case AUTH_ERROR:
+        case LOGIN_ERROR:
             localStorage.removeItem('token');
             return {
                 ...state,
