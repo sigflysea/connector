@@ -123,7 +123,7 @@ Register.propTypes = {
     isAuthenticated: PropTypes.bool,
 };
 
-const mapToState = (state) => ({
+const mapStateToProps = (state) => ({
     isAuthenticated: state.auth.isAuthenticated,
 });
 export default connect(null, { setAlert, register })(Register);
