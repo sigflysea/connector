@@ -47,7 +47,7 @@ export const login = ({ email, password }) => async (dispatch) => {
             type: LOGIN_SUCCESS,
             payload: res.data,
         });
-        loadUser(localStorage.token);
+        dispatch(loadUser());
     } catch (err) {
         const errors = err.response.data.errors;
 
@@ -76,7 +76,7 @@ export const register = ({ name, email, password }) => async (dispatch) => {
             type: REGISTER_SUCCESS,
             payload: res.data,
         });
-        loadUser(localStorage.token);
+        dispatch(loadUser());
     } catch (err) {
         const errors = err.response.data.errors;
 
