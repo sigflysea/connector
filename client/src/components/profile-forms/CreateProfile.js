@@ -39,7 +39,7 @@ const CreateProfile = (createProfile, history) => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        createProfile(formData, history);
+        createProfile(formData, history, false);
     };
     return (
         <Fragment>
@@ -48,7 +48,7 @@ const CreateProfile = (createProfile, history) => {
                 <i className='fas fa-user' /> Add some changes to your profile
             </p>
             <small>* = required field</small>
-            <form className='form' onSubmit={(e) => onSubmit(e)}>
+            <form className='form' onSubmit={onSubmit}>
                 <div className='form-group'>
                     <select name='status' value={status} onChange={onChange}>
                         <option>* Select Professional Status</option>
