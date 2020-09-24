@@ -21,16 +21,17 @@ export const getCurrentProfile = () => async (dispatch) => {
 };
 
 // Create or update profile
-export const createProfile = (formData, history, edit = false) => async 
-    dispatch => {
+export const createProfile = (formData, history, edit = false) => async (
+    dispatch
+) => {
     try {
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-            }
-        }
+            },
+        };
         const res = await axios.post('/api/profile', formData, config);
-        
+
         dispatch({
             type: GET_PROFILE,
             payload: res.data,
@@ -58,5 +59,3 @@ export const createProfile = (formData, history, edit = false) => async
     }
 };
 // AudioParam
-
-
