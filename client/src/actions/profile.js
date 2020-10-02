@@ -37,7 +37,9 @@ export const createProfile = (formData, history, edit = false) => async (
             payload: res.data,
         });
 
-        dispatch(setAlert(edit ? 'Profile updated' : 'Profile created'));
+        dispatch(
+            setAlert(edit ? 'Profile updated' : 'Profile created', 'success')
+        );
         if (!edit) {
             history.push('/dashboard');
         }
@@ -58,4 +60,3 @@ export const createProfile = (formData, history, edit = false) => async (
         });
     }
 };
-// AudioParam
