@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import { getProfileById } from '../../actions/profile';
 import { Link } from 'react-router-dom';
-import { ProfileTop } from './ProfileTop';
+import ProfileTop from './ProfileTop';
 
 const Profile = ({
     getProfileById,

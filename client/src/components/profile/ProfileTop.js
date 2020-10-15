@@ -15,7 +15,7 @@ const ProfileTop = ({
             <img class='round-img my-1' src={avatar} alt='' />
             <h1 class='large'>{name}</h1>
             <p class='lead'>{status}</p>
-            <p>S{location}</p>
+            <p>{location}</p>
             <div class='icons my-1'>
                 <a href='#' target='_blank' rel='noopener noreferrer'>
                     <i class='fas fa-globe fa-2x'></i>
