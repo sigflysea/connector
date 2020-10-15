@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import { getProfileById } from '../../actions/profile';
 import { Link } from 'react-router-dom';
+import { ProfileTop } from './ProfileTop';
 
 const Profile = ({
     getProfileById,
@@ -16,13 +17,27 @@ const Profile = ({
     }, [getProfileById]);
     return (
         <Fragment>
+            {profile === null || loading ? (
+                <Spinner />
+            ) : (
+                <Fragment>
+                    <Link to='/profiles' className='btn btn-light'>
+                        GO BACK{' '}
+                    </Link>
+                    {auth.isAuthenticated &&
+                        auth.user._id === profile.user._id && (
+                            <Link to='/edit-profile' className='btn btn-dark'>
+                                {' '}
+                                Edit Profile{' '}
+                            </Link>
+                        )}
+                </Fragment>
+            )}
             <Fragment>
-                {profile === null || loading ? <Spinner /> : <div>Profile</div>}
-            </Fragment>{' '}
-            <Spinner />
-            <Link to='/profiles' className='btn btn-primary'>
-                GO BACK{' '}
-            </Link>
+                <div class='profile-grid my-1'>
+                    <ProfileTop profile={profile} />
+                </div>
+            </Fragment>
         </Fragment>
     );
 };
