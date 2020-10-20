@@ -8,6 +8,7 @@ const request = require('request');
 const config = require('config');
 const { check, validationResult } = require('express-validator');
 const { ContextRunnerImpl } = require('express-validator/src/chain');
+const normalize = require('normalize-url');
 
 //@route   Get api/profile
 //@desc    Test route
@@ -57,49 +58,50 @@ router.post(
             linkedin,
             facebook,
         } = req.body;
-        const profileFields = {};
-        profileFields.user = req.userP.id;
 
-        if (company) profileFields.company = company;
-        if (website) profileFields.website = website;
-        if (location) profileFields.location = location;
-        if (bio) profileFields.company = bio;
-        if (status) profileFields.status = status;
-        if (githubusername) profileFields.githubusername = githubusername;
+        const profileFields = {
+            user: req.user.id,
+            company,
+            location,
+            website:
+                website && website !== ''
+                    ? normalize(website, { forceHttps: true })
+                    : '',
+            bio,
+            skills: Array.isArray(skills)
+                ? skills
+                : skills.split(',').map((skill) => ' ' + skill.trim()),
+            status,
+            githubusername,
+        };
 
-        if (skills) {
-            profileFields.skills = skills
-                .split(',')
-                .map((skill) => skill.trim());
+        // Build social object and add to profileFields
+        const socialfields = {
+            youtube,
+            twitter,
+            instagram,
+            linkedin,
+            facebook,
+        };
+
+        for (const [key, value] of Object.entries(socialfields)) {
+            if (value && value.length > 0)
+                socialfields[key] = normalize(value, { forceHttps: true });
         }
-
-        profileFields.social = {};
-        if (youtube) profileFields.social.youtube = youtube;
-        if (twitter) profileFields.social.twitter = twitter;
-        if (facebook) profileFields.social.facebook = facebook;
-        if (linkedin) profileFields.social.linkedin = linkedin;
-        if (instagram) profileFields.social.instagram = instagram;
+        profileFields.social = socialfields;
 
         try {
-            let profile = await Profile.findOne({ user: req.userP.id });
-            if (profile) {
-                prfile = await Profile.findOneAndUpdate(
-                    { user: req.userP.id },
-                    { $set: profileFields },
-                    { new: true }
-                );
-                return res.json(profile);
-            }
-
-            //Create
-            profile = new Profile(profileFields);
-            await profile.save();
-            return res.json(profile);
-        } catch (error) {
-            console.log(error.message);
-            res.status(500).send('Server error');
+            // Using upsert option (creates new doc if no match is found):
+            let profile = await Profile.findOneAndUpdate(
+                { user: req.user.id },
+                { $set: profileFields },
+                { new: true, upsert: true, setDefaultsOnInsert: true }
+            );
+            res.json(profile);
+        } catch (err) {
+            console.error(err.message);
+            res.status(500).send('Server Error');
         }
-        // res.json('good');
     }
 );
 
