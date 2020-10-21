@@ -20,7 +20,7 @@ Posts.propTypes = {
     post: PropTypes.object.isRequired,
 };
 
-const mapStateToPrps = (state) => ({
+const mapStateToProps = (state) => ({
     post: state.post,
 });
-export default connect(mapStateToPrps, { getPosts })(Posts);
+export default connect(mapStateToProps, { getPosts })(Posts);
