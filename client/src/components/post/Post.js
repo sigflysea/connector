@@ -13,7 +13,18 @@ const Post = ({ getPost, post: { post, loading }, match }) => {
         getPost(match.params.id);
     }, [getPost]);
 
-    return <Fragment>FUN</Fragment>;
+    return loading || post === null ? (
+        <Spinner></Spinner>
+    ) : (
+        <Fragment>
+            <Link to='/posts' className='btn'>
+                Back to Posts
+            </Link>
+            <PostItem post={post} showActions={false}>
+                {' '}
+            </PostItem>
+        </Fragment>
+    );
 };
 
 Post.propTypes = {

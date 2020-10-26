@@ -22,7 +22,7 @@ router.get('/', auth, async (req, res) => {
     }
 });
 
-//@route   Get api/posts/:user_id
+//@route   Post api/posts/:user_id
 //@desc    Get post by User ID
 //@access  Private/////?????????????? not working  ????????
 router.post('/:user_id', async (req, res) => {
@@ -73,7 +73,7 @@ router.post(
 //@route   Get api/posts/:post_id
 //@desc    post  by post ID
 //@access  Private
-router.post('/:post_id', auth, async (req, res) => {
+router.get('/:post_id', auth, async (req, res) => {
     try {
         const post = await Post.findById(req.params.post_id);
         if (!post) {

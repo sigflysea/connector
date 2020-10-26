@@ -62,8 +62,16 @@ function App() {
                                 path='/add-education'
                                 component={AddEducation}
                             />
-                            <PrivateRoute path='/posts' component={Posts} />
-                            <PrivateRoute path='/posts/:id' component={Post} />
+                            <PrivateRoute
+                                exact
+                                path='/posts'
+                                component={Posts}
+                            />
+                            <PrivateRoute
+                                exact
+                                path='/posts/:id'
+                                component={Post}
+                            />
                         </Switch>
                     </section>
                 </div>
