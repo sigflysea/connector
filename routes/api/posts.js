@@ -192,7 +192,7 @@ router.post(
             };
             post.comments.unshift(comment);
             await post.save();
-            return res.json(comment);
+            return res.json(post.comments);
         } catch (error) {
             if (error.kind == 'ObjectId') {
                 return res.status(400).json({ meg: 'no post found' });
