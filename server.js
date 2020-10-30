@@ -7,9 +7,9 @@ connectDB();
 
 app.use(express.json({ extented: false }));
 
-app.get('/', (req, res) => {
-    res.send('API ');
-});
+// app.get('/', (req, res) => {
+//     res.send('API ');
+// });   this affect production but not dev
 app.use('/api/users', require('./routes/api/users'));
 app.use('/api/auth', require('./routes/api/auth'));
 app.use('/api/profile', require('./routes/api/profile'));
