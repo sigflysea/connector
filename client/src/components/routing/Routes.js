@@ -25,7 +25,6 @@ const Routes = () => {
                 <Route path='/register' component={Register} />
                 <Route path='/profiles' component={Profiles} />
                 <Route path='/profile/:id' component={Profile} />
-                <Route component={NotFound} />
                 <PrivateRoute path='/dashboard' component={Dashboard} />
                 <PrivateRoute
                     path='/create-profile'
@@ -39,6 +38,7 @@ const Routes = () => {
                 <PrivateRoute path='/add-education' component={AddEducation} />
                 <PrivateRoute exact path='/posts' component={Posts} />
                 <PrivateRoute exact path='/posts/:id' component={Post} />
+                <Route component={NotFound} />
             </Switch>
         </section>
     );
